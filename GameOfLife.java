@@ -74,6 +74,7 @@ public class GameOfLife {
 		String Line = "";
 		
 		//insert 0 to all cells in board;
+		// #feedback - this insertion is not needed, since when creating the board without values, it takes the default values which are zero for integers.
 		for (int i = 0; i < (rows + 2); i++) {
 			for (int j = 0; j < (cols + 2); j++) {
 				board[i][j] = 0;
@@ -82,9 +83,11 @@ public class GameOfLife {
 		
 		// Reads file
         for (int i = 1; i < rows + 1; i++) {
-        Line = in.readLine(); // converts file line to string
+		// #feedback - variable name should start with lower case.
+	Line = in.readLine(); // converts file line to string
 
           for (int j = 1; j < cols + 1; j++) {
+		  // #feedback - you can check for emptiness outside of the "for" loop and avoid running on all the columns in case the line is empty.
            if (!Line.isEmpty()) { // check if the line is not empty
             if (j - 1 < Line.length()) {
                 if (Line.charAt(j - 1) == 'x') {
@@ -128,6 +131,7 @@ public class GameOfLife {
 	// Uses the count(board,i,j) function to count the number of alive neighbors.
 	public static int cellValue(int[][] board, int i, int j) {
 		int cell = board [i][j];
+		// #feedback - to make the program more efficient, it is better to call count once and store it in a variable.
 		if (cell ==1) {
 			if (count(board, i, j) < 2) {
 				cell = 0;
@@ -135,11 +139,13 @@ public class GameOfLife {
 			else if (count(board, i, j) > 3) {
 				cell = 0;
 			}
+			// #feedback - "if"s with no commands are not needed and can be removed.
 			else if (count(board, i, j) == 2) {	
 			}
 			else if (count(board, i, j) == 3) {	
 			}
 		}
+		// #feedback - the "if" is not needed since a cell can be only 0 or 1.
 		else if (cell == 0) {
 			if (count(board, i, j) == 3) {
 				cell = 1;
@@ -158,6 +164,7 @@ public class GameOfLife {
 	public static int count(int[][] board, int i, int j) {
 		int countAlive = 0;
 
+		// #feedback - it is usually better to use for in these case to avoid these multiple "if"s, since it's easier to forget a cell or have the wrong row/col.
 		//Checks the number of living neighbors of the given cell
 		if (board [i-1][j-1] == 1) //Left upper neighbor is alive
 		{
